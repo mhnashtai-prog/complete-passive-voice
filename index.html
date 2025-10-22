@@ -303,11 +303,12 @@
       gap: 1.5rem;
       align-items: center;
     }
-
+    
     .arrows {
       display: flex;
       gap: 3rem;
       align-items: center;
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .arrow {
@@ -545,7 +546,7 @@
       </div>
     </div>
     
-   <div class="controls" id="controls">
+    <div class="controls">
       <div class="arrows">
         <div class="arrow" onclick="prevCard(); event.stopPropagation();">←</div>
         <div class="arrow" onclick="nextCard(); event.stopPropagation();">→</div>
@@ -713,8 +714,8 @@
         },
         {
           active: "He needs to <span class='active-part'>service</span> his laptop.",
-          passive: "He needs to <span class='causative-part'>get</span> his laptop <span class='
-          passive-part'>serviced</span>.",
+        passive: "He needs to <span class='causative-part'>get</span> his laptop <span class='passive-part'>serviced</span>.",
+          to <span class='causative-part'>get</span> his laptop <span class='passive-part'>serviced</span>.",
           steps: [
             {label: "Original", text: "He needs to <span class='active-part'>service</span> his laptop."},
             {label: "Infinitive Causative", text: "need to + <span class='causative-part'>get</span> + object + <span class='passive-part'>past participle</span>"},
@@ -993,11 +994,13 @@
     function updateCard() {
       const cardData = data[currentLevel][currentIndex];
       const card = document.getElementById('card');
-      const controls = document.getElementById('controls');
-
+      
       if (isFlipped) {
         card.classList.remove('flipped');
         isFlipped = false;
+        const arrows = document.querySelector('.arrows');
+        arrows.style.opacity = '1';
+        arrows.style.pointerEvents = 'auto';
       }
       
       document.getElementById('activeText').innerHTML = cardData.active;
@@ -1031,6 +1034,15 @@
       const card = document.getElementById('card');
       card.classList.toggle('flipped');
       isFlipped = !isFlipped;
+      
+      const arrows = document.querySelector('.arrows');
+      if (isFlipped) {
+        arrows.style.opacity = '0';
+        arrows.style.pointerEvents = 'none';
+      } else {
+        arrows.style.opacity = '1';
+        arrows.style.pointerEvents = 'auto';
+      }
     }
 
     function nextCard() {
@@ -1113,4 +1125,4 @@
     updateProgress();
   </script>
 </body>
-</html>  
+</html>
