@@ -303,10 +303,7 @@
       gap: 1.5rem;
       align-items: center;
     }
-    .controls.hidden-arrows .arrows {
-  opacity: 0;
-  pointer-events: none;
-}
+
     .arrows {
       display: flex;
       gap: 3rem;
@@ -549,8 +546,8 @@
     </div>
     
    <div class="controls" id="controls">
-      <flip card="arrows">
-        <flipCard="arrow" onclick="prevCard(); event.stopPropagation();">←</div>
+      <div class="arrows">
+        <div class="arrow" onclick="prevCard(); event.stopPropagation();">←</div>
         <div class="arrow" onclick="nextCard(); event.stopPropagation();">→</div>
       </div>
       <div class="nav-dots" id="navDots"></div>
@@ -716,7 +713,8 @@
         },
         {
           active: "He needs to <span class='active-part'>service</span> his laptop.",
-          passive: "He needs to <span class='causative-part'>get</span> his laptop <span class='passive-part'>serviced</span>.",
+          passive: "He needs to <span class='causative-part'>get</span> his laptop <span class='
+          passive-part'>serviced</span>.",
           steps: [
             {label: "Original", text: "He needs to <span class='active-part'>service</span> his laptop."},
             {label: "Infinitive Causative", text: "need to + <span class='causative-part'>get</span> + object + <span class='passive-part'>past participle</span>"},
@@ -995,15 +993,13 @@
     function updateCard() {
       const cardData = data[currentLevel][currentIndex];
       const card = document.getElementById('card');
-      
-      const card = document.getElementById('card');
-const controls = document.getElementById('controls');
+      const controls = document.getElementById('controls');
 
-if (isFlipped) {
-  card.classList.remove('flipped');
-  controls.classList.remove('hidden-arrows');
-  isFlipped = false;
-}
+      if (isFlipped) {
+        card.classList.remove('flipped');
+        isFlipped = false;
+      }
+      
       document.getElementById('activeText').innerHTML = cardData.active;
       
       let transformationHTML = '<div class="card-main-text">' + cardData.passive + '</div>';
@@ -1032,17 +1028,11 @@ if (isFlipped) {
     }
 
     function flipCard() {
-  const card = document.getElementById('card');
-  const controls = document.getElementById('controls');
-  card.classList.toggle('flipped');
-  isFlipped = !isFlipped;
-  
-  if (isFlipped) {
-    controls.classList.add('hidden-arrows');
-  } else {
-    controls.classList.remove('hidden-arrows');
-  }
-}
+      const card = document.getElementById('card');
+      card.classList.toggle('flipped');
+      isFlipped = !isFlipped;
+    }
+
     function nextCard() {
       if (currentIndex < data[currentLevel].length - 1) {
         currentIndex++;
@@ -1123,4 +1113,4 @@ if (isFlipped) {
     updateProgress();
   </script>
 </body>
-</html>
+</html>  
