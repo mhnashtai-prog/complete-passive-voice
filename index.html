@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>INTUITY: Passive Voice Mastery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      margin: 0;
+      background: #000000;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .background {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 30% 20%, rgba(201, 169, 97, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 80%, rgba(201, 169, 97, 0.06) 0%, transparent 45%),
+                  #000000;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #C9A961;
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+    
+    .subtitle {
+      font-size: 0.875rem;
+      color: #C9A961;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .author {
+      font-size: 0.75rem;
+      color: #8e8e93;
+      margin-bottom: 0.25rem;
+      font-weight: 400;
+    }
+
+    .topic {
+      font-size: 0.8125rem;
+      color: #C9A961;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .level-selector {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .level-btn {
+      padding: 0.75rem 1.5rem;
+      background: rgba(28, 28, 30, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(201, 169, 97, 0.25);
+      border-radius: 0.75rem;
+      color: #8e8e93;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .level-btn:hover {
+      background: rgba(28, 28, 30, 0.95);
+      color: #C9A961;
+      border-color: rgba(201, 169, 97, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .level-btn.active {
+      background: rgba(201, 169, 97, 0.15);
+      color: #C9A961;
+      border-color: rgba(201, 169, 97, 0.5);
+      box-shadow: 0 0 20px rgba(201, 169, 97, 0.3);
+    }
+    
+    .progress-section {
+      background: rgba(28, 28, 30, 0.85);
+      backdrop-filter: blur(40px) saturate(150%);
+      -webkit-backdrop-filter: blur(40px) saturate(150%);
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      border: 1.5px solid rgba(201, 169, 97, 0.25);
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      font-size: 0.8rem;
+      color: #8e8e93;
+      font-weight: 600;
+    }
+    
+    .progress-bar-container {
+      height: 8px;
+      background: rgba(201, 169, 97, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: #C9A961;
+      border-radius: 4px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 12px rgba(201, 169, 97, 0.5);
+      width: 0%;
+    }
+    
+    .card-container {
+      perspective: 1500px;
+      margin-bottom: 2rem;
+    }
+    
+    .card {
+      width: 100%;
+      min-height: 500px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+    
+    .card-face {
+      width: 100%;
+      min-height: 500px;
+      position: absolute;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background: rgba(28, 28, 30, 0.85);
+      backdrop-filter: blur(40px) saturate(150%);
+      -webkit-backdrop-filter: blur(40px) saturate(150%);
+      border: 1.5px solid rgba(201, 169, 97, 0.25);
+      border-radius: 1.5rem;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    }
+    
+    .card-front {
+      z-index: 2;
+    }
+    
+    .card-back {
+      transform: rotateY(180deg);
+    }
+    
+    .card-label {
+      font-size: 0.75rem;
+      color: #636366;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .card-main-text {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      color: #e5e5e7;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      max-width: 700px;
+    }
+
+    .active-part {
+      color: #3b82f6;
+      font-weight: 600;
+    }
+
+    .passive-part {
+      color: #C9A961;
+      font-weight: 600;
+    }
+
+    .modal-part {
+      color: #ec4899;
+      font-weight: 600;
+    }
+
+    .causative-part {
+      color: #10b981;
+      font-weight: 600;
+    }
+    
+    .card-back .card-main-text {
+      font-size: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .transformation-box {
+      background: rgba(201, 169, 97, 0.08);
+      border: 1px solid rgba(201, 169, 97, 0.3);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      text-align: left;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .transformation-step {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .step-label {
+      color: #C9A961;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+      display: block;
+    }
+
+    .step-text {
+      color: #e5e5e7;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .arrow-down {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #636366;
+      margin: 0.5rem 0;
+    }
+    
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+    
+    .card-hint {
+      font-size: 0.875rem;
+      color: #8e8e93;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(201, 169, 97, 0.08);
+      border-radius: 0.75rem;
+      border: 1px solid rgba(201, 169, 97, 0.2);
+    }
+    
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    
+    .arrows {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .arrow {
+      width: 3.5rem;
+      height: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(28, 28, 30, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(201, 169, 97, 0.25);
+      border-radius: 0.75rem;
+      font-size: 1.5rem;
+      color: #8e8e93;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .arrow:hover {
+      background: rgba(28, 28, 30, 0.95);
+      color: #C9A961;
+      border-color: rgba(201, 169, 97, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(201, 169, 97, 0.2);
+    }
+    
+    .nav-dots {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 100%;
+    }
+    
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(201, 169, 97, 0.2);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(201, 169, 97, 0.3);
+    }
+    
+    .dot:hover {
+      transform: scale(1.4);
+      background: rgba(201, 169, 97, 0.4);
+    }
+    
+    .dot.active {
+      background: #C9A961;
+      box-shadow: 0 0 12px rgba(201, 169, 97, 0.6);
+      transform: scale(1.3);
+    }
+    
+    .dot.viewed {
+      background: rgba(201, 169, 97, 0.5);
+    }
+    
+    .reset-btn {
+      padding: 1rem 2.5rem;
+      background: #C9A961;
+      color: #000000;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 16px rgba(201, 169, 97, 0.3);
+    }
+    
+    .reset-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201, 169, 97, 0.4);
+    }
+    
+    .category-badge {
+      display: inline-block;
+      padding: 0.375rem 1rem;
+      background: rgba(201, 169, 97, 0.15);
+      border: 1px solid rgba(201, 169, 97, 0.3);
+      border-radius: 1.5rem;
+      font-size: 0.7rem;
+      color: #C9A961;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .legend {
+      background: rgba(28, 28, 30, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(201, 169, 97, 0.25);
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    .color-active { background: #3b82f6; }
+    .color-passive { background: #C9A961; }
+    .color-modal { background: #ec4899; }
+    .color-causative { background: #10b981; }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      .card-face {
+        min-height: 450px;
+        padding: 2rem 1.5rem;
+      }
+      
+      .card-main-text {
+        font-size: 1.25rem;
+      }
+      
+      .transformation-box {
+        padding: 1rem;
+      }
+      
+      .arrows {
+        gap: 2rem;
+      }
+      
+      .arrow {
+        width: 3rem;
+        height: 3rem;
+      }
+
+      .level-selector {
+        gap: 0.5rem;
+      }
+
+      .level-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+      }
+
+      .legend {
+        font-size: 0.7rem;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  
+  <div class="container">
+    <header>
+      <h1>INTUITY</h1>
+      <p class="subtitle">Intuitive & Immersive Learning</p>
+      <p class="author">Majid Nashtai</p>
+      <p class="topic">Passive Voice</p>
+    </header>
+
+    <div class="level-selector">
+      <button class="level-btn active" onclick="changeLevel('simple')" id="btnSimple">Simple Passive</button>
+      <button class="level-btn" onclick="changeLevel('causative')" id="btnCausative">Causative (have/get)</button>
+      <button class="level-btn" onclick="changeLevel('reporting')" id="btnReporting">Reporting Verbs</button>
+      <button class="level-btn" onclick="changeLevel('modal')" id="btnModal">Modal Passive</button>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color color-active"></div>
+        <span>Active Voice</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color color-passive"></div>
+        <span>Passive Voice</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color color-modal"></div>
+        <span>Modal</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color color-causative"></div>
+        <span>Causative</span>
+      </div>
+    </div>
+    
+    <div class="progress-section">
+      <div class="progress-header">
+        <span>Progress</span>
+        <span id="progressText">0/0 viewed</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+    
+    <div class="card-container">
+      <div class="card" id="card" onclick="flipCard()">
+        <div class="card-face card-front">
+          <div class="card-label">ACTIVE SENTENCE</div>
+          <div class="category-badge" id="categoryFront"></div>
+          <div class="card-icon" id="iconFront">🔄</div>
+          <div class="card-main-text" id="activeText"></div>
+          <div class="card-hint">💡 Click card to see transformation</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="card-label">PASSIVE TRANSFORMATION</div>
+          <div class="category-badge" id="categoryBack"></div>
+          <div class="card-icon" id="iconBack">✨</div>
+          <div id="transformationContent"></div>
+          <div class="card-hint">💡 Click to see active again</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="controls">
+      <div class="arrows">
+        <div class="arrow" onclick="prevCard(); event.stopPropagation();">←</div>
+        <div class="arrow" onclick="nextCard(); event.stopPropagation();">→</div>
+      </div>
+      <div class="nav-dots" id="navDots"></div>
+      <button class="reset-btn" onclick="resetProgress()">↻ Reset Progress</button>
+    </div>
+  </div>
+
+  <script>
+    const data = {
+      simple: [
+        {
+          active: "They <span class='active-part'>build</span> houses every year.",
+          passive: "Houses <span class='passive-part'>are built</span> every year.",
+          steps: [
+            {label: "Original", text: "They <span class='active-part'>build</span> houses every year."},
+            {label: "Identify Object", text: "<u>houses</u> → becomes subject"},
+            {label: "Passive Form", text: "Houses <span class='passive-part'>are built</span> every year."},
+            {label: "Agent (optional)", text: "Houses <span class='passive-part'>are built</span> (by them) every year."}
+          ]
+        },
+        {
+          active: "Someone <span class='active-part'>stole</span> my bike yesterday.",
+          passive: "My bike <span class='passive-part'>was stolen</span> yesterday.",
+          steps: [
+            {label: "Original", text: "Someone <span class='active-part'>stole</span> my bike yesterday."},
+            {label: "Identify Object", text: "<u>my bike</u> → becomes subject"},
+            {label: "Passive Form", text: "My bike <span class='passive-part'>was stolen</span> yesterday."},
+            {label: "Note", text: "'Someone' (unknown agent) is omitted"}
+          ]
+        },
+        {
+          active: "They <span class='active-part'>have completed</span> the project.",
+          passive: "The project <span class='passive-part'>has been completed</span>.",
+          steps: [
+            {label: "Original", text: "They <span class='active-part'>have completed</span> the project."},
+            {label: "Identify Object", text: "<u>the project</u> → becomes subject"},
+            {label: "Present Perfect", text: "have completed → <span class='passive-part'>has been completed</span>"},
+            {label: "Result", text: "The project <span class='passive-part'>has been completed</span>."}
+          ]
+        },
+        {
+          active: "The chef <span class='active-part'>is preparing</span> dinner now.",
+          passive: "Dinner <span class='passive-part'>is being prepared</span> now.",
+          steps: [
+            {label: "Original", text: "The chef <span class='active-part'>is preparing</span> dinner now."},
+            {label: "Continuous Form", text: "is preparing → <span class='passive-part'>is being prepared</span>"},
+            {label: "Result", text: "Dinner <span class='passive-part'>is being prepared</span> now."},
+            {label: "Agent (optional)", text: "Dinner <span class='passive-part'>is being prepared</span> by the chef now."}
+          ]
+        },
+        {
+          active: "The company <span class='active-part'>will launch</span> a new product next month.",
+          passive: "A new product <span class='passive-part'>will be launched</span> next month.",
+          steps: [
+            {label: "Original", text: "The company <span class='active-part'>will launch</span> a new product next month."},
+            {label: "Future Simple", text: "will launch → <span class='passive-part'>will be launched</span>"},
+            {label: "Result", text: "A new product <span class='passive-part'>will be launched</span> next month."},
+            {label: "Agent (optional)", text: "by the company (usually omitted)"}
+          ]
+        },
+        {
+          active: "Scientists <span class='active-part'>had discovered</span> the cure before 2020.",
+          passive: "The cure <span class='passive-part'>had been discovered</span> before 2020.",
+          steps: [
+            {label: "Original", text: "Scientists <span class='active-part'>had discovered</span> the cure before 2020."},
+            {label: "Past Perfect", text: "had discovered → <span class='passive-part'>had been discovered</span>"},
+            {label: "Result", text: "The cure <span class='passive-part'>had been discovered</span> before 2020."},
+            {label: "Agent (optional)", text: "by scientists (can be added if needed)"}
+          ]
+        },
+        {
+          active: "The team <span class='active-part'>was discussing</span> the proposal.",
+          passive: "The proposal <span class='passive-part'>was being discussed</span>.",
+          steps: [
+            {label: "Original", text: "The team <span class='active-part'>was discussing</span> the proposal."},
+            {label: "Past Continuous", text: "was discussing → <span class='passive-part'>was being discussed</span>"},
+            {label: "Result", text: "The proposal <span class='passive-part'>was being discussed</span>."},
+            {label: "Agent (optional)", text: "by the team"}
+          ]
+        },
+        {
+          active: "They <span class='active-part'>are going to announce</span> the winner tomorrow.",
+          passive: "The winner <span class='passive-part'>is going to be announced</span> tomorrow.",
+          steps: [
+            {label: "Original", text: "They <span class='active-part'>are going to announce</span> the winner tomorrow."},
+            {label: "Be going to", text: "are going to announce → <span class='passive-part'>is going to be announced</span>"},
+            {label: "Result", text: "The winner <span class='passive-part'>is going to be announced</span> tomorrow."},
+            {label: "Note", text: "Future with 'be going to' structure"}
+          ]
+        },
+        {
+          active: "The manager <span class='active-part'>has been reviewing</span> applications all week.",
+          passive: "Applications <span class='passive-part'>have been reviewed</span> all week.",
+          steps: [
+            {label: "Original", text: "The manager <span class='active-part'>has been reviewing</span> applications all week."},
+            {label: "Perfect Continuous", text: "Rarely used in passive - prefer simple form"},
+            {label: "Better Form", text: "Applications <span class='passive-part'>have been reviewed</span> all week."},
+            {label: "Note", text: "Passive perfect continuous is grammatically possible but avoided"}
+          ]
+        },
+        {
+          active: "Everyone <span class='active-part'>loves</span> this song.",
+          passive: "This song <span class='passive-part'>is loved</span> by everyone.",
+          steps: [
+            {label: "Original", text: "Everyone <span class='active-part'>loves</span> this song."},
+            {label: "Present Simple", text: "loves → <span class='passive-part'>is loved</span>"},
+            {label: "Result", text: "This song <span class='passive-part'>is loved</span> by everyone."},
+            {label: "Note", text: "Agent 'by everyone' emphasizes universal appeal"}
+          ]
+        }
+      ],
+      
+      causative: [
+        {
+          active: "I <span class='active-part'>repaired</span> my car. (I did it myself)",
+          passive: "I <span class='causative-part'>had</span> my car <span class='passive-part'>repaired</span>. (Someone else did it)",
+          steps: [
+            {label: "Original", text: "I <span class='active-part'>repaired</span> my car."},
+            {label: "Causative Structure", text: "Subject + <span class='causative-part'>have/get</span> + object + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "I <span class='causative-part'>had</span> my car <span class='passive-part'>repaired</span>."},
+            {label: "Meaning", text: "Someone else repaired it for me"}
+          ]
+        },
+        {
+          active: "She <span class='active-part'>cuts</span> her hair every month. (She does it)",
+          passive: "She <span class='causative-part'>gets</span> her hair <span class='passive-part'>cut</span> every month. (Hairdresser does it)",
+          steps: [
+            {label: "Original", text: "She <span class='active-part'>cuts</span> her hair every month."},
+            {label: "Causative with GET", text: "<span class='causative-part'>get</span> is more informal than <span class='causative-part'>have</span>"},
+            {label: "Result", text: "She <span class='causative-part'>gets</span> her hair <span class='passive-part'>cut</span> every month."},
+            {label: "Meaning", text: "A hairdresser cuts it for her"}
+          ]
+        },
+        {
+          active: "They <span class='active-part'>will paint</span> the house next week.",
+          passive: "They <span class='causative-part'>will have</span> the house <span class='passive-part'>painted</span> next week.",
+          steps: [
+            {label: "Original", text: "They <span class='active-part'>will paint</span> the house next week."},
+            {label: "Future Causative", text: "will + <span class='causative-part'>have</span> + object + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "They <span class='causative-part'>will have</span> the house <span class='passive-part'>painted</span> next week."},
+            {label: "Meaning", text: "Painters will do it for them"}
+          ]
+        },
+        {
+          active: "I should <span class='active-part'>check</span> my eyes.",
+          passive: "I should <span class='causative-part'>have</span> my eyes <span class='passive-part'>checked</span>.",
+          steps: [
+            {label: "Original", text: "I should <span class='active-part'>check</span> my eyes."},
+            {label: "Modal + Causative", text: "should + <span class='causative-part'>have</span> + object + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "I should <span class='causative-part'>have</span> my eyes <span class='passive-part'>checked</span>."},
+            {label: "Meaning", text: "An optician should check them"}
+          ]
+        },
+        {
+          active: "We <span class='active-part'>cleaned</span> the carpets yesterday.",
+          passive: "We <span class='causative-part'>had</span> the carpets <span class='passive-part'>cleaned</span> yesterday.",
+          steps: [
+            {label: "Original", text: "We <span class='active-part'>cleaned</span> the carpets yesterday."},
+            {label: "Past Causative", text: "Subject + <span class='causative-part'>had</span> + object + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "We <span class='causative-part'>had</span> the carpets <span class='passive-part'>cleaned</span> yesterday."},
+            {label: "Meaning", text: "A professional cleaner did it"}
+          ]
+        },
+        {
+          active: "He needs to <span class='active-part'>service</span> his laptop.",
+          passive: "He needs to <span class='causative-part'>get</span> his laptop <span class='passive-part'>serviced</span>.",
+          steps: [
+            {label: "Original", text: "He needs to <span class='active-part'>service</span> his laptop."},
+            {label: "Infinitive Causative", text: "need to + <span class='causative-part'>get</span> + object + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "He needs to <span class='causative-part'>get</span> his laptop <span class='passive-part'>serviced</span>."},
+            {label: "Meaning", text: "A technician will service it for him"}
+          ]
+        },
+        {
+          active: "I'm <span class='active-part'>fixing</span> my watch at the shop.",
+          passive: "I'm <span class='causative-part'>having</span> my watch <span class='passive-part'>fixed</span> at the shop.",
+          steps: [
+            {label: "Original", text: "I'm <span class='active-part'>fixing</span> my watch at the shop."},
+            {label: "Progressive Causative", text: "am + <span class='causative-part'>having</span> + object + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "I'm <span class='causative-part'>having</span> my watch <span class='passive-part'>fixed</span> at the shop."},
+            {label: "Note", text: "Shows action in progress done by someone else"}
+          ]
+        },
+        {
+          active: "They must <span class='active-part'>update</span> the software immediately.",
+          passive: "They must <span class='causative-part'>have</span> the software <span class='passive-part'>updated</span> immediately.",
+          steps: [
+            {label: "Original", text: "They must <span class='active-part'>update</span> the software immediately."},
+            {label: "Modal Causative", text: "must + <span class='causative-part'>have</span> + object + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "They must <span class='causative-part'>have</span> the software <span class='passive-part'>updated</span> immediately."},
+            {label: "Meaning", text: "IT department will do the update"}
+          ]
+        },
+        {
+          active: "She's going to <span class='active-part'>renovate</span> her kitchen.",
+          passive: "She's going to <span class='causative-part'>have</span> her kitchen <span class='passive-part'>renovated</span>.",
+          steps: [
+            {label: "Original", text: "She's going to <span class='active-part'>renovate</span> her kitchen."},
+            {label: "Future Causative", text: "going to + <span class='causative-part'>have</span> + object + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "She's going to <span class='causative-part'>have</span> her kitchen <span class='passive-part'>renovated</span>."},
+            {label: "Meaning", text: "Contractors will do the renovation"}
+          ]
+        },
+        {
+          active: "I've just <span class='active-part'>installed</span> new windows.",
+          passive: "I've just <span class='causative-part'>had</span> new windows <span class='passive-part'>installed</span>.",
+          steps: [
+            {label: "Original", text: "I've just <span class='active-part'>installed</span> new windows."},
+            {label: "Present Perfect Causative", text: "have + <span class='causative-part'>had</span> + object + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "I've just <span class='causative-part'>had</span> new windows <span class='passive-part'>installed</span>."},
+            {label: "Note", text: "Shows recently completed action by professionals"}
+          ]
+        }
+      ],
+      
+      reporting: [
+        {
+          active: "People <span class='active-part'>say</span> that he is a genius.",
+          passive: "It <span class='passive-part'>is said</span> that he is a genius. / He <span class='passive-part'>is said</span> to be a genius.",
+          steps: [
+            {label: "Original", text: "People <span class='active-part'>say</span> that he is a genius."},
+            {label: "Impersonal Form", text: "It + <span class='passive-part'>is said</span> + that clause"},
+            {label: "Personal Form", text: "He + <span class='passive-part'>is said</span> + to be a genius"},
+            {label: "Note", text: "Both forms are correct; personal form is more common"}
+          ]
+        },
+        {
+          active: "They <span class='active-part'>believe</span> that she won the award.",
+          passive: "It <span class='passive-part'>is believed</span> that she won the award. / She <span class='passive-part'>is believed</span> to have won the award.",
+          steps: [
+            {label: "Original", text: "They <span class='active-part'>believe</span> that she won the award."},
+            {label: "Impersonal", text: "It <span class='passive-part'>is believed</span> that she won the award."},
+            {label: "Personal", text: "She <span class='passive-part'>is believed</span> to have won the award."},
+            {label: "Note", text: "Use 'to have + past participle' when reporting past events"}
+          ]
+        },
+        {
+          active: "Everyone <span class='active-part'>thinks</span> the meeting will be cancelled.",
+          passive: "The meeting <span class='passive-part'>is thought</span> to be cancelled.",
+          steps: [
+            {label: "Original", text: "Everyone <span class='active-part'>thinks</span> the meeting will be cancelled."},
+            {label: "Identify Clause", text: "that the meeting will be cancelled"},
+            {label: "Personal Passive", text: "The meeting <span class='passive-part'>is thought</span> to be cancelled."},
+            {label: "Note", text: "'will be' becomes 'to be' in passive reporting"}
+          ]
+        },
+        {
+          active: "People <span class='active-part'>reported</span> that the building collapsed.",
+          passive: "The building <span class='passive-part'>was reported</span> to have collapsed.",
+          steps: [
+            {label: "Original", text: "People <span class='active-part'>reported</span> that the building collapsed."},
+            {label: "Past Reporting", text: "reported (past) → <span class='passive-part'>was reported</span>"},
+            {label: "Perfect Infinitive", text: "collapsed → to have collapsed"},
+            {label: "Result", text: "The building <span class='passive-part'>was reported</span> to have collapsed."}
+          ]
+        },
+        {
+          active: "They <span class='active-part'>expect</span> that prices will rise.",
+          passive: "Prices <span class='passive-part'>are expected</span> to rise.",
+          steps: [
+            {label: "Original", text: "They <span class='active-part'>expect</span> that prices will rise."},
+            {label: "Reporting Verb", text: "expect → <span class='passive-part'>are expected</span>"},
+            {label: "Future Event", text: "will rise → to rise"},
+            {label: "Result", text: "Prices <span class='passive-part'>are expected</span> to rise."}
+          ]
+        },
+        {
+          active: "Scientists <span class='active-part'>know</span> that climate change is accelerating.",
+          passive: "It <span class='passive-part'>is known</span> that climate change is accelerating.",
+          steps: [
+            {label: "Original", text: "Scientists <span class='active-part'>know</span> that climate change is accelerating."},
+            {label: "Impersonal Form", text: "It + <span class='passive-part'>is known</span> + that clause"},
+            {label: "Result", text: "It <span class='passive-part'>is known</span> that climate change is accelerating."},
+            {label: "Note", text: "Impersonal form preferred with 'know' for scientific facts"}
+          ]
+        },
+        {
+          active: "People <span class='active-part'>allege</span> that the company avoided taxes.",
+          passive: "The company <span class='passive-part'>is alleged</span> to have avoided taxes.",
+          steps: [
+            {label: "Original", text: "People <span class='active-part'>allege</span> that the company avoided taxes."},
+            {label: "Legal Reporting", text: "allege → <span class='passive-part'>is alleged</span>"},
+            {label: "Past Event", text: "avoided → to have avoided"},
+            {label: "Result", text: "The company <span class='passive-part'>is alleged</span> to have avoided taxes."}
+          ]
+        },
+        {
+          active: "Experts <span class='active-part'>estimate</span> that the project will cost millions.",
+          passive: "The project <span class='passive-part'>is estimated</span> to cost millions.",
+          steps: [
+            {label: "Original", text: "Experts <span class='active-part'>estimate</span> that the project will cost millions."},
+            {label: "Transform", text: "estimate → <span class='passive-part'>is estimated</span>"},
+            {label: "Future Reference", text: "will cost → to cost"},
+            {label: "Result", text: "The project <span class='passive-part'>is estimated</span> to cost millions."}
+          ]
+        },
+        {
+          active: "They <span class='active-part'>assume</span> that he has left the country.",
+          passive: "He <span class='passive-part'>is assumed</span> to have left the country.",
+          steps: [
+            {label: "Original", text: "They <span class='active-part'>assume</span> that he has left the country."},
+            {label: "Passive Form", text: "assume → <span class='passive-part'>is assumed</span>"},
+            {label: "Present Perfect", text: "has left → to have left"},
+            {label: "Result", text: "He <span class='passive-part'>is assumed</span> to have left the country."}
+          ]
+        },
+        {
+          active: "Historians <span class='active-part'>consider</span> that the artifact is ancient.",
+          passive: "The artifact <span class='passive-part'>is considered</span> to be ancient.",
+          steps: [
+            {label: "Original", text: "Historians <span class='active-part'>consider</span> that the artifact is ancient."},
+            {label: "Transform", text: "consider → <span class='passive-part'>is considered</span>"},
+            {label: "Present State", text: "is ancient → to be ancient"},
+            {label: "Result", text: "The artifact <span class='passive-part'>is considered</span> to be ancient."}
+          ]
+        }
+      ],
+      
+      modal: [
+        {
+          active: "You <span class='modal-part'>must</span> <span class='active-part'>complete</span> the form.",
+          passive: "The form <span class='modal-part'>must</span> <span class='passive-part'>be completed</span>.",
+          steps: [
+            {label: "Original", text: "You <span class='modal-part'>must</span> <span class='active-part'>complete</span> the form."},
+            {label: "Modal Structure", text: "<span class='modal-part'>modal</span> + be + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "The form <span class='modal-part'>must</span> <span class='passive-part'>be completed</span>."},
+            {label: "Note", text: "Modal + be replaces the active verb"}
+          ]
+        },
+        {
+          active: "They <span class='modal-part'>should</span> <span class='active-part'>fix</span> the problem immediately.",
+          passive: "The problem <span class='modal-part'>should</span> <span class='passive-part'>be fixed</span> immediately.",
+          steps: [
+            {label: "Original", text: "They <span class='modal-part'>should</span> <span class='active-part'>fix</span> the problem immediately."},
+            {label: "Transform", text: "<span class='modal-part'>should</span> fix → <span class='modal-part'>should</span> <span class='passive-part'>be fixed</span>"},
+            {label: "Result", text: "The problem <span class='modal-part'>should</span> <span class='passive-part'>be fixed</span> immediately."},
+            {label: "Meaning", text: "Recommendation in passive form"}
+          ]
+        },
+        {
+          active: "Someone <span class='modal-part'>might</span> <span class='active-part'>steal</span> your car.",
+          passive: "Your car <span class='modal-part'>might</span> <span class='passive-part'>be stolen</span>.",
+          steps: [
+            {label: "Original", text: "Someone <span class='modal-part'>might</span> <span class='active-part'>steal</span> your car."},
+            {label: "Possibility Modal", text: "<span class='modal-part'>might</span> steal → <span class='modal-part'>might</span> <span class='passive-part'>be stolen</span>"},
+            {label: "Result", text: "Your car <span class='modal-part'>might</span> <span class='passive-part'>be stolen</span>."},
+            {label: "Note", text: "Unknown agent is omitted"}
+          ]
+        },
+        {
+          active: "We <span class='modal-part'>can</span> <span class='active-part'>solve</span> this issue quickly.",
+          passive: "This issue <span class='modal-part'>can</span> <span class='passive-part'>be solved</span> quickly.",
+          steps: [
+            {label: "Original", text: "We <span class='modal-part'>can</span> <span class='active-part'>solve</span> this issue quickly."},
+            {label: "Ability Modal", text: "<span class='modal-part'>can</span> solve → <span class='modal-part'>can</span> <span class='passive-part'>be solved</span>"},
+            {label: "Result", text: "This issue <span class='modal-part'>can</span> <span class='passive-part'>be solved</span> quickly."},
+            {label: "Meaning", text: "Expresses possibility/ability in passive"}
+          ]
+        },
+        {
+          active: "They <span class='modal-part'>may</span> <span class='active-part'>delay</span> the flight.",
+          passive: "The flight <span class='modal-part'>may</span> <span class='passive-part'>be delayed</span>.",
+          steps: [
+            {label: "Original", text: "They <span class='modal-part'>may</span> <span class='active-part'>delay</span> the flight."},
+            {label: "Permission/Possibility", text: "<span class='modal-part'>may</span> delay → <span class='modal-part'>may</span> <span class='passive-part'>be delayed</span>"},
+            {label: "Result", text: "The flight <span class='modal-part'>may</span> <span class='passive-part'>be delayed</span>."},
+            {label: "Note", text: "Expresses uncertain future event"}
+          ]
+        },
+        {
+          active: "You <span class='modal-part'>could</span> <span class='active-part'>improve</span> this design.",
+          passive: "This design <span class='modal-part'>could</span> <span class='passive-part'>be improved</span>.",
+          steps: [
+            {label: "Original", text: "You <span class='modal-part'>could</span> <span class='active-part'>improve</span> this design."},
+            {label: "Conditional Modal", text: "<span class='modal-part'>could</span> improve → <span class='modal-part'>could</span> <span class='passive-part'>be improved</span>"},
+            {label: "Result", text: "This design <span class='modal-part'>could</span> <span class='passive-part'>be improved</span>."},
+            {label: "Meaning", text: "Suggests possibility for improvement"}
+          ]
+        },
+        {
+          active: "They <span class='modal-part'>ought to</span> <span class='active-part'>inform</span> the customers.",
+          passive: "The customers <span class='modal-part'>ought to</span> <span class='passive-part'>be informed</span>.",
+          steps: [
+            {label: "Original", text: "They <span class='modal-part'>ought to</span> <span class='active-part'>inform</span> the customers."},
+            {label: "Obligation Modal", text: "<span class='modal-part'>ought to</span> inform → <span class='modal-part'>ought to</span> <span class='passive-part'>be informed</span>"},
+            {label: "Result", text: "The customers <span class='modal-part'>ought to</span> <span class='passive-part'>be informed</span>."},
+            {label: "Note", text: "Formal modal expressing moral obligation"}
+          ]
+        },
+        {
+          active: "Someone <span class='modal-part'>must have</span> <span class='active-part'>taken</span> my keys.",
+          passive: "My keys <span class='modal-part'>must have been</span> <span class='passive-part'>taken</span>.",
+          steps: [
+            {label: "Original", text: "Someone <span class='modal-part'>must have</span> <span class='active-part'>taken</span> my keys."},
+            {label: "Perfect Modal", text: "<span class='modal-part'>must have</span> taken → <span class='modal-part'>must have been</span> <span class='passive-part'>taken</span>"},
+            {label: "Result", text: "My keys <span class='modal-part'>must have been</span> <span class='passive-part'>taken</span>."},
+            {label: "Note", text: "Deduction about past event in passive"}
+          ]
+        },
+        {
+          active: "They <span class='modal-part'>should have</span> <span class='active-part'>warned</span> us earlier.",
+          passive: "We <span class='modal-part'>should have been</span> <span class='passive-part'>warned</span> earlier.",
+          steps: [
+            {label: "Original", text: "They <span class='modal-part'>should have</span> <span class='active-part'>warned</span> us earlier."},
+            {label: "Perfect Modal Passive", text: "<span class='modal-part'>should have</span> + been + <span class='passive-part'>past participle</span>"},
+            {label: "Result", text: "We <span class='modal-part'>should have been</span> <span class='passive-part'>warned</span> earlier."},
+            {label: "Meaning", text: "Criticism about past action not taken"}
+          ]
+        },
+        {
+          active: "Someone <span class='modal-part'>might have</span> <span class='active-part'>deleted</span> the files.",
+          passive: "The files <span class='modal-part'>might have been</span> <span class='passive-part'>deleted</span>.",
+          steps: [
+            {label: "Original", text: "Someone <span class='modal-part'>might have</span> <span class='active-part'>deleted</span> the files."},
+            {label: "Perfect Possibility", text: "<span class='modal-part'>might have</span> deleted → <span class='modal-part'>might have been</span> <span class='passive-part'>deleted</span>"},
+            {label: "Result", text: "The files <span class='modal-part'>might have been</span> <span class='passive-part'>deleted</span>."},
+            {label: "Note", text: "Expresses uncertain past event"}
+          ]
+        }
+      ]
+    };
+
+    let currentLevel = 'simple';
+    let currentIndex = 0;
+    let viewedCards = new Set();
+    let isFlipped = false;
+
+    function changeLevel(level) {
+      currentLevel = level;
+      currentIndex = 0;
+      viewedCards.clear();
+      isFlipped = false;
+      
+      document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('btn' + level.charAt(0).toUpperCase() + level.slice(1)).classList.add('active');
+      
+      updateCard();
+      renderDots();
+      updateProgress();
+    }
+
+    function updateCard() {
+      const cardData = data[currentLevel][currentIndex];
+      const card = document.getElementById('card');
+      
+      if (isFlipped) {
+        card.classList.remove('flipped');
+        isFlipped = false;
+      }
+      
+      document.getElementById('activeText').innerHTML = cardData.active;
+      
+      let transformationHTML = '<div class="card-main-text">' + cardData.passive + '</div>';
+      transformationHTML += '<div class="transformation-box">';
+      
+      cardData.steps.forEach((step, index) => {
+        transformationHTML += '<div class="transformation-step">';
+        transformationHTML += '<span class="step-label">' + step.label + '</span>';
+        transformationHTML += '<div class="step-text">' + step.text + '</div>';
+        transformationHTML += '</div>';
+        if (index < cardData.steps.length - 1) {
+          transformationHTML += '<div class="arrow-down">↓</div>';
+        }
+      });
+      
+      transformationHTML += '</div>';
+      document.getElementById('transformationContent').innerHTML = transformationHTML;
+      
+      const categoryText = currentLevel.charAt(0).toUpperCase() + currentLevel.slice(1);
+      document.getElementById('categoryFront').textContent = categoryText;
+      document.getElementById('categoryBack').textContent = categoryText;
+      
+      viewedCards.add(currentLevel + '-' + currentIndex);
+      updateProgress();
+      updateDots();
+    }
+
+    function flipCard() {
+      const card = document.getElementById('card');
+      card.classList.toggle('flipped');
+      isFlipped = !isFlipped;
+    }
+
+    function nextCard() {
+      if (currentIndex < data[currentLevel].length - 1) {
+        currentIndex++;
+        updateCard();
+      }
+    }
+
+    function prevCard() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCard();
+      }
+    }
+
+    function renderDots() {
+      const dotsContainer = document.getElementById('navDots');
+      dotsContainer.innerHTML = '';
+      
+      data[currentLevel].forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.onclick = () => {
+          currentIndex = index;
+          updateCard();
+        };
+        dotsContainer.appendChild(dot);
+      });
+      
+      updateDots();
+    }
+
+    function updateDots() {
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach((dot, index) => {
+        dot.classList.remove('active', 'viewed');
+        if (index === currentIndex) {
+          dot.classList.add('active');
+        } else if (viewedCards.has(currentLevel + '-' + index)) {
+          dot.classList.add('viewed');
+        }
+      });
+    }
+
+    function updateProgress() {
+      const total = data[currentLevel].length;
+      let viewed = 0;
+      
+      for (let i = 0; i < total; i++) {
+        if (viewedCards.has(currentLevel + '-' + i)) {
+          viewed++;
+        }
+      }
+      
+      const percentage = (viewed / total) * 100;
+      document.getElementById('progressBar').style.width = percentage + '%';
+      document.getElementById('progressText').textContent = viewed + '/' + total + ' viewed';
+    }
+
+    function resetProgress() {
+      viewedCards.clear();
+      currentIndex = 0;
+      isFlipped = false;
+      updateCard();
+      updateProgress();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevCard();
+      if (e.key === 'ArrowRight') nextCard();
+      if (e.key === ' ') {
+        e.preventDefault();
+        flipCard();
+      }
+    });
+
+    updateCard();
+    renderDots();
+    updateProgress();
+  </script>
+</body>
+</html>
